@@ -1,0 +1,135 @@
+.progress{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:3px;z-index:40;
+background:linear-gradient(90deg,var(--gold),var(--sage));transform:scaleX(0);transform-origin:right center;opacity:.85}
+.wash{background:none}
+.wash i{position:absolute;border-radius:50%;filter:blur(40px);will-change:transform}
+.wash i:nth-child(1){width:60vmax;height:44vmax;right:-18vmax;top:-12vmax;background:radial-gradient(closest-side,rgba(110,129,80,.20),transparent);animation:drift1 22s ease-in-out infinite alternate}
+.wash i:nth-child(2){width:50vmax;height:38vmax;left:-18vmax;top:42vh;background:radial-gradient(closest-side,rgba(110,129,80,.13),transparent);animation:drift2 26s ease-in-out infinite alternate}
+.wash i:nth-child(3){width:44vmax;height:34vmax;right:-8vmax;bottom:-10vmax;background:radial-gradient(closest-side,rgba(168,132,74,.12),transparent);animation:drift1 30s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate3d(-8vmax,6vmax,0) scale(1.15)}}
+@keyframes drift2{to{transform:translate3d(9vmax,-7vmax,0) scale(1.2)}}
+.petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.petal{position:absolute;top:0;opacity:0;color:var(--sage)}
+body.opened .petal{opacity:.38;animation:fall var(--t,20s) linear var(--dl,0s) infinite}
+.petal svg{display:block;width:100%;height:100%;animation:sway var(--s,3.6s) ease-in-out infinite alternate}
+@keyframes fall{
+0%{transform:translate3d(0,-12vh,0) rotate(0)}
+100%{transform:translate3d(var(--dx,10vw),112vh,0) rotate(var(--rot,500deg))}
+}
+@keyframes sway{from{transform:translateX(-14px) rotate(-26deg)}to{transform:translateX(14px) rotate(26deg)}}
+.ping{position:absolute;left:50%;top:56%;width:min(40vw,190px);aspect-ratio:1;z-index:3;border-radius:50%;
+border:2px solid rgba(168,132,74,.7);transform:translate(-50%,-50%);pointer-events:none;opacity:0;
+animation:ping 2.8s ease-out 1.4s infinite}
+.ping.p2{animation-delay:2.3s}
+@keyframes ping{0%{transform:translate(-50%,-50%) scale(1);opacity:.7}100%{transform:translate(-50%,-50%) scale(2.1);opacity:0}}
+.tap{animation:fadeIn 1s ease 2.4s forwards, nudge 2.4s ease-in-out 3.4s infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.envelope.open .ping{display:none}
+.tulips{animation:sway2 6s ease-in-out 3.5s infinite alternate;transform-origin:100% 100%}
+@keyframes sway2{from{transform:rotate(-1.4deg)}to{transform:rotate(1.6deg)}}
+.rv{opacity:0;transform:translateY(26px);
+transition:opacity .9s ease var(--d,0s), transform 1s cubic-bezier(.2,.7,.2,1) var(--d,0s), filter .9s ease var(--d,0s), letter-spacing 1.4s ease var(--d,0s)}
+.rv.in,.group.in .rv{opacity:1;transform:none}
+.verse .w{display:inline-block;opacity:0;filter:blur(8px);transform:translateY(12px)}
+.verse.in .w{animation:wordIn .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.25s + var(--i)*.07s)}
+@keyframes wordIn{to{opacity:1;filter:blur(0);transform:none}}
+.verse-ref{opacity:0;transition:opacity 1s ease 2.2s}
+.verse.in .verse-ref{opacity:1}
+.names .n{clip-path:inset(-25% -12% -25% 112%);
+transition:clip-path 1.6s cubic-bezier(.65,0,.25,1) var(--d,0s)}
+.names.in .n{clip-path:inset(-25% -12% -25% -12%)}
+.names .amp{opacity:0;transform:scale(.2) rotate(-40deg);
+transition:opacity .6s ease var(--d,0s), transform 1s cubic-bezier(.3,1.7,.5,1) var(--d,0s)}
+.names.in .amp{opacity:1;transform:none;animation:beat 3.4s ease-in-out 4s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.names.in .n{animation:inkglow 5s ease-in-out 4s infinite}
+@keyframes inkglow{0%,100%{text-shadow:0 0 0 transparent}50%{text-shadow:0 6px 22px rgba(110,129,80,.35)}}
+.count b{display:inline-block}
+.count b.flip{animation:flip .55s cubic-bezier(.2,.8,.3,1)}
+@keyframes flip{from{transform:translateY(-45%) scale(.9);opacity:0}to{transform:none;opacity:1}}
+.count div{position:relative}
+.count div + div::before{content:"";position:absolute;right:calc(-1 * clamp(9px,3vw,22px));top:14px;width:1px;height:30px;background:var(--line)}
+.branch .ln{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.6s ease .1s}
+.branch .lf{transform-box:fill-box;transform-origin:center;transform:scale(0) rotate(-30deg);
+transition:transform .9s cubic-bezier(.3,1.6,.5,1) calc(.9s + var(--k)*.12s)}
+.branch.in .ln{stroke-dashoffset:0}
+.branch.in .lf{transform:none}
+.branch.rv{transform:none}
+.icon-wrap{position:relative;width:64px;height:64px;margin:0 auto 6px}
+.icon-wrap .icon{margin:0;position:relative;z-index:1}
+.icon-wrap::before,.icon-wrap::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid var(--sage);opacity:0}
+.group.in .icon-wrap::before{animation:ripple 3.4s ease-out 1.2s infinite}
+.group.in .icon-wrap::after{animation:ripple 3.4s ease-out 2.4s infinite}
+@keyframes ripple{0%{transform:scale(.8);opacity:.55}100%{transform:scale(2.1);opacity:0}}
+.event .date.rv{letter-spacing:.3em}
+.group.in .date.rv{letter-spacing:.04em}
+.pin-svg{transform-origin:50% 100%}
+.group.in .pin-svg{animation:drop 1.1s cubic-bezier(.3,1.5,.5,1) .15s both}
+@keyframes drop{0%{transform:translateY(-46px) scale(.6);opacity:0}55%{opacity:1}100%{transform:none;opacity:1}}
+.pin-svg{opacity:0}
+.group.in .pin-svg{opacity:1}
+.rings-svg circle.r1,.rings-svg circle.r2,.rings-svg .gem{transform-box:fill-box;transform-origin:center;opacity:0}
+.group.in .rings-svg .r1{animation:ringL 1.3s cubic-bezier(.3,1.2,.4,1) .2s both}
+.group.in .rings-svg .r2{animation:ringR 1.3s cubic-bezier(.3,1.2,.4,1) .2s both}
+.group.in .rings-svg .gem{animation:gem 1s cubic-bezier(.3,1.7,.5,1) 1.3s both, twinkle 2.8s ease-in-out 2.6s infinite}
+@keyframes ringL{from{transform:translateX(-26px) rotate(-90deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ringR{from{transform:translateX(26px) rotate(90deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes gem{from{transform:scale(0) rotate(-90deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes twinkle{0%,100%{transform:scale(1)}50%{transform:scale(1.3) rotate(8deg)}}
+.btn{position:relative;overflow:hidden;transition:background .2s,color .2s,transform .25s cubic-bezier(.3,1.5,.5,1),box-shadow .25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(67,80,47,.22)}
+.btn:active{transform:scale(.96)}
+.btn svg{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.btn:hover svg{transform:scale(1.2) rotate(-8deg)}
+.btn.solid::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;
+background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+transform:skewX(-18deg);animation:shine 4.5s ease-in-out 2.5s infinite}
+@keyframes shine{0%{left:-60%}35%,100%{left:130%}}
+.cal-menu.show{animation:menuIn .28s cubic-bezier(.2,.8,.3,1.2) both;transform-origin:top center}
+@keyframes menuIn{from{opacity:0;transform:translateX(-50%) translateY(-8px) scale(.94)}to{opacity:1;transform:translateX(-50%)}}
+.cal-menu.show a{animation:itemIn .35s ease both}
+.cal-menu.show a:nth-child(2){animation-delay:.07s}
+@keyframes itemIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+.blessing.rv{filter:blur(10px);transform:translateY(20px) scale(.97)}
+.blessing.in{filter:blur(0);transform:none}
+.scene.rv{transform:translateY(60px) scale(1.06);transform-origin:50% 100%}
+.scene.rv.in{transform:none}
+.scene img{transform-origin:50% 100%}
+.scene.in img{animation:breathe2 7s ease-in-out 2s infinite alternate}
+@keyframes breathe2{to{transform:scale(1.025)}}
+@media (prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;animation-delay:0s!important}
+.tulips path{stroke-dashoffset:0}
+.tap{opacity:1}
+.petals,.ping{display:none}
+.cv-mono{clip-path:none;opacity:1}.cv-names,.cv-hands,.cv-phrase,.cv-down{opacity:1;transform:none;filter:none}.cv-names{letter-spacing:.22em}.cv-names i{transform:none}
+}
+.cover{position:relative;z-index:1;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+padding:clamp(28px,7vh,64px) 24px clamp(64px,12vh,110px);text-align:center;overflow:hidden;
+background:linear-gradient(165deg,#F4F1EA 0%,#EBE5D8 55%,#E3DCCC 100%);color:#2b2926}
+.cover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20%;pointer-events:none;background:linear-gradient(to bottom,transparent,var(--paper))}
+.cv-mono{display:block;height:min(44vh,440px);height:min(44svh,440px);width:auto;max-width:60vw;
+clip-path:inset(0 0 100% 0);opacity:0}
+.cv-names{display:flex;align-items:center;justify-content:center;gap:clamp(14px,4vw,24px);margin:clamp(18px,4.5vh,40px) 0 0;direction:ltr;
+font-family:'Cormorant Garamond','Times New Roman',serif;font-weight:500;font-size:clamp(18px,5.4vw,28px);letter-spacing:.6em;color:#2b2926;opacity:0}
+.cv-names i{display:block;width:1px;height:1.7em;background:#8b8173;transform:scaleY(0)}
+.cv-names span{padding-left:.6em}
+.cv-hands{display:block;width:min(52vw,250px);height:auto;margin-top:clamp(12px,3vh,28px);opacity:0;transform:translateY(26px);
+-webkit-mask-image:linear-gradient(to bottom,#000 78%,transparent 100%);mask-image:linear-gradient(to bottom,#000 78%,transparent 100%)}
+.cv-phrase{display:block;width:min(74vw,330px);height:auto;margin-top:clamp(16px,4.5vh,44px);opacity:0;filter:blur(8px);transform:scale(.97)}
+.cv-down{position:absolute;left:50%;bottom:clamp(20px,5vh,40px);z-index:2;width:44px;height:44px;margin-left:-22px;border:0;background:none;padding:0;cursor:pointer;color:#6b6252;opacity:0}
+.cv-down svg{width:26px;height:26px;display:block;margin:auto}
+.cover.in .cv-mono{animation:inkDown 2.8s cubic-bezier(.55,.1,.25,1) .2s forwards}
+.cover.in .cv-names{animation:namesIn 1.8s cubic-bezier(.2,.7,.2,1) 2.2s forwards}
+.cover.in .cv-names i{animation:lineIn .9s ease 2.9s forwards}
+.cover.in .cv-hands{animation:handsIn 1.6s cubic-bezier(.2,.7,.2,1) 3.1s forwards, handsFloat 6s ease-in-out 5s infinite alternate}
+.cover.in .cv-phrase{animation:phraseIn 1.8s ease 4s forwards, phraseBreath 7s ease-in-out 6s infinite alternate}
+.cover.in .cv-down{animation:downIn 1s ease 5.4s forwards, bob 2.2s ease-in-out 6.4s infinite}
+@keyframes inkDown{0%{clip-path:inset(0 0 100% 0);opacity:1}100%{clip-path:inset(-2% -2% -2% -2%);opacity:1}}
+@keyframes namesIn{from{opacity:0;letter-spacing:.9em;filter:blur(6px)}to{opacity:1;letter-spacing:.22em;filter:blur(0)}}
+@keyframes lineIn{to{transform:scaleY(1)}}
+@keyframes handsIn{to{opacity:1;transform:none}}
+@keyframes handsFloat{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+@keyframes phraseIn{to{opacity:1;filter:blur(0);transform:none}}
+@keyframes phraseBreath{from{transform:scale(1)}to{transform:scale(1.03)}}
+@keyframes downIn{to{opacity:.8}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
