@@ -168,12 +168,12 @@
   function openEnv(){
     if(opened) return; opened = true;
     env.classList.add("open");
-    setTimeout(function(){ document.body.classList.remove("locked"); document.body.classList.add("opened"); startObserving(); }, 1000);
-    setTimeout(function(){ env.remove(); }, 2000);
+    setTimeout(function(){ document.body.classList.remove("locked"); document.body.classList.add("opened"); startObserving(); }, 2000);
+    setTimeout(function(){ env.remove(); }, 3000);
     setTimeout(function(){
       var page = document.querySelector(".page");
       if(page) page.scrollIntoView({behavior:"smooth",block:"start"});
-    }, 4000);
+    }, 5000);
   }
   env.addEventListener("click", openEnv);
   env.addEventListener("keydown", function(ev){ if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); openEnv(); } });
